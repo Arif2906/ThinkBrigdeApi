@@ -1,0 +1,46 @@
+USE [ThinkBridge]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_Add_Edit_Product]    Script Date: 1/4/2020 7:24:33 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE procedure [dbo].[sp_Add_Edit_Product]
+(@id int,@operation char(1),@name varchar(255),@unit_price int,@available char(1),@quantity int,@image varchar(255))
+as 
+begin 
+if(@operation='I')
+insert into product(name,unit_price,available,quantity,image)values(@name,@unit_price,@available,@quantity,@image)
+if(@operation='U')
+update product set name=@name,unit_price=@unit_price,available=@available,quantity=@quantity,image=@image where id=@id
+if(@operation='D')
+delete from Product where @name=@name and id=@id
+end
+
+
+ 
+GO
+/****** Object:  Table [dbo].[Product]    Script Date: 1/4/2020 7:24:33 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Product](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[name] [varchar](255) NULL,
+	[unit_Price] [int] NULL,
+	[Available] [varchar](10) NULL,
+	[Quantity] [int] NULL,
+	[image] [varchar](255) NULL,
+ CONSTRAINT [PK__Persons__3213E83F35C1630D] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
